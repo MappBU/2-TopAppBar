@@ -18,24 +18,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+        // Показывает Бар
         setSupportActionBar(binding?.topAppBar)
 
-        supportFragmentManager.beginTransaction().replace(R.id.content, Home()).commit()
-        binding?.bottomNav?.selectedItemId = R.id.homeItemBottomNav
-
-        binding?.bottomNav?.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.homeItemBottomNav -> supportFragmentManager.beginTransaction().replace(R.id.content, Home()).commit()
-                R.id.shopItemBottomNav -> supportFragmentManager.beginTransaction().replace(R.id.content, Shop()).commit()
-                R.id.deliveryItemBottomNav -> supportFragmentManager.beginTransaction().replace(R.id.content, Delivery()).commit()
-                R.id.accountItemBottomNav -> supportFragmentManager.beginTransaction().replace(R.id.content, Account()).commit()
-            }
-
-            return@setOnItemSelectedListener true
-
-        }
-
-
+        // Обработка тапов по бару
         binding?.topAppBar?.setOnMenuItemClickListener { menuItem: MenuItem ->
 
             when (menuItem.itemId) {
@@ -59,23 +45,9 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        // Тапаем по итемам Драйвера
-        binding?.apply {
-            nv.setNavigationItemSelectedListener {
-                when (it.itemId) {
-                    R.id.item1 -> Toast.makeText(this@MainActivity, "Item 1", Toast.LENGTH_SHORT)
-                        .show()
-                    R.id.item2 -> Toast.makeText(this@MainActivity, "Item 2", Toast.LENGTH_SHORT)
-                        .show()
-                }
-                // При нажатии на итем менюшки - дополнительно заезжает обратно Вивигатион вью
-                drawer.closeDrawer(GravityCompat.START)
-                true
-            }
-        }
-
     }
 
+    // Обязательно надуваем Бар
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
         val menuInflater = menuInflater
